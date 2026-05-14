@@ -106,6 +106,15 @@ function formatNumber(value: number | null | undefined): string {
   return Number(value).toLocaleString();
 }
 
+function findOR(data: OddsRatio[], rawVariable: string): OddsRatio | undefined {
+  return data.find((d) => d.rawVariable === rawVariable);
+}
+
+function formatOR(value: number | undefined): string {
+  if (value === undefined || Number.isNaN(value)) return "—";
+  return `${Number(value).toFixed(2)}×`;
+}
+
 function pLabel(p: number): string {
   if (p < 0.001) return "p < .001";
   return `p = ${p.toFixed(3)}`;
@@ -179,7 +188,6 @@ type MultilineTickProps = {
   payload?: { value: string | number };
 };
 
-
 function MultilineTick({ x = 0, y = 0, payload }: MultilineTickProps) {
   const value = String(payload?.value ?? "");
   const lines = value.split(/\n/);
@@ -187,15 +195,7 @@ function MultilineTick({ x = 0, y = 0, payload }: MultilineTickProps) {
   return (
     <g transform={`translate(${x},${y})`}>
       {lines.map((line, index) => (
-        <text
-          key={`${line}-${index}`}
-          x={0}
-          y={index * 14}
-          dy={12}
-          textAnchor="middle"
-          fill="#3f3f46"
-          fontSize={12}
-        >
+        <text key={`${line}-${index}`} x={0} y={index * 14} dy={12} textAnchor="middle" fill="#3f3f46" fontSize={12}>
           {line}
         </text>
       ))}
@@ -279,7 +279,6 @@ function OccupationChart({ data, overallRate }: { data: OccupationRate[]; overal
         <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
             <h3 className="text-xl font-semibold text-zinc-950">Occupation exposes several different risk patterns</h3>
-            <p className="mt-1 text-sm text-zinc-500">The chart includes the civilian hierarchy and special categories used in Model 3.</p>
           </div>
           <Badge className="bg-zinc-100 text-zinc-700">Overall occupation sample rate: {formatPercent(overallRate)}</Badge>
         </div>
@@ -305,18 +304,6 @@ function OccupationChart({ data, overallRate }: { data: OccupationRate[]; overal
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-        </div>
-
-        <div className="mt-4 grid gap-3 md:grid-cols-3">
-          <div className="rounded-2xl bg-zinc-50 p-4 text-sm leading-6 text-zinc-600">
-            <span className="font-semibold text-zinc-950">Civilian hierarchy:</span> workers/peasants, specialists, senior specialists, and managers.
-          </div>
-          <div className="rounded-2xl bg-zinc-50 p-4 text-sm leading-6 text-zinc-600">
-            <span className="font-semibold text-zinc-950">Special categories:</span> army, religious figures, students, unemployed, and prisoners.
-          </div>
-          <div className="rounded-2xl bg-zinc-50 p-4 text-sm leading-6 text-zinc-600">
-            <span className="font-semibold text-zinc-950">Model link:</span> blue bars are categories included in the categorical occupation model.
-          </div>
         </div>
       </CardContent>
     </Card>
@@ -479,6 +466,194 @@ function OddsPlot({ data, meta }: { data: OddsRatio[]; meta: StoryMeta }) {
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function FindingBlock({
+  stat,
+  statLabel,
+  headline,
+  body,
+  accent = false,
+}: {
+  stat: string;
+  statLabel: string;
+  headline: string;
+  body: React.ReactNode;
+  accent?: boolean;
+}) {
+  return (
+    <Card className={accent ? "border-red-200 bg-red-50/40" : ""}>
+      <CardContent className="p-6">
+        <div className="flex items-baseline gap-3 flex-wrap">
+          <span
+            className={
+              accent
+                ? "text-5xl font-semibold tracking-tight text-[#c0392b]"
+                : "text-5xl font-semibold tracking-tight text-zinc-950"
+            }
+          >
+            {stat}
+          </span>
+          <span className="text-xs font-medium uppercase tracking-[0.18em] text-zinc-500">
+            {statLabel}
+          </span>
+        </div>
+        <h4 className="mt-4 text-lg font-semibold leading-snug text-zinc-950">{headline}</h4>
+        <p className="mt-2 text-sm leading-6 text-zinc-600">{body}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+function DualFindingBlock({
+  stats,
+  headline,
+  body,
+  accent = false,
+}: {
+  stats: { stat: string; label: string }[];
+  headline: string;
+  body: React.ReactNode;
+  accent?: boolean;
+}) {
+  return (
+    <Card className={accent ? "border-red-200 bg-red-50/40" : ""}>
+      <CardContent className="p-6">
+        <div className="flex items-baseline gap-6 flex-wrap">
+          {stats.map((s, i) => (
+            <div key={i}>
+              <div
+                className={
+                  accent
+                    ? "text-4xl font-semibold tracking-tight text-[#c0392b]"
+                    : "text-4xl font-semibold tracking-tight text-zinc-950"
+                }
+              >
+                {s.stat}
+              </div>
+              <div className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-zinc-500">
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+        <h4 className="mt-4 text-lg font-semibold leading-snug text-zinc-950">{headline}</h4>
+        <p className="mt-2 text-sm leading-6 text-zinc-600">{body}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+function ModelFindings({ data }: { data: OddsRatio[] }) {
+  const basic = findOR(data, "edu_basic_literacy");
+  const higher = findOR(data, "edu_higher");
+  const eduRel = findOR(data, "edu_religious");
+  const occRel = findOR(data, "occ_religious");
+  const specialists = findOR(data, "occ_level2_specialists");
+  const chiefs = findOR(data, "occ_level3_chiefs");
+  const managers = findOR(data, "occ_level4_managers");
+  const army = findOR(data, "occ_army");
+  const unemployed = findOR(data, "occ_unemployed");
+
+  return (
+    <div className="mt-12">
+      <div className="mb-8 max-w-3xl">
+        <h3 className="text-2xl font-semibold tracking-tight text-zinc-950">
+          What the model reveals
+        </h3>
+        <p className="mt-3 text-base leading-7 text-zinc-600">
+          Four patterns stand out after holding arrest period constant. Together they reshape the
+          question — from <em>did the regime punish education?</em> to <em>which kinds of education
+          and which kinds of work flagged a person as dangerous?</em>
+        </p>
+      </div>
+
+      <div className="grid gap-5 md:grid-cols-2">
+        <FindingBlock
+          stat={formatOR(higher?.or)}
+          statLabel="higher education vs. illiterate"
+          headline="The education effect is not a ladder"
+          body={
+            <>
+              Higher education nearly doubles the odds of execution relative to the illiterate
+              reference. Basic and low literacy categories sit{" "}
+              <em>below</em> the reference ({formatOR(basic?.or)} for basic literacy).
+              Primary, vocational, secondary, and incomplete higher are statistically
+              indistinguishable from the illiterate. Risk only breaks upward at the very top —
+              higher education at {formatOR(higher?.or)} and religious education at{" "}
+              {formatOR(eduRel?.or)}.
+            </>
+          }
+        />
+
+        <DualFindingBlock
+          accent
+          stats={[
+            { stat: formatOR(eduRel?.or), label: "religious education vs. illiterate" },
+            { stat: formatOR(occRel?.or), label: "religious occupation vs. workers" },
+          ]}
+          headline="A twin signal for religious life"
+          body={
+            <>
+              Two independently measured variables — what a person studied and what they did for a
+              living — both single out religious life and produce nearly identical estimates. When
+              two different measurements converge on the same finding, that convergence strengthens
+              confidence in the result. The pattern is consistent with Soviet anti-religious
+              campaigns that specifically targeted Muslim clergy in Central Asia.
+            </>
+          }
+        />
+
+        <FindingBlock
+          stat={formatOR(managers?.or)}
+          statLabel="managers vs. workers/peasants"
+          headline="Formal occupational rank barely registers"
+          body={
+            <>
+              The civilian hierarchy from workers up to managers shows almost no gradient.
+              Specialists at {formatOR(specialists?.or)}, senior chiefs at {formatOR(chiefs?.or)},
+              managers at {formatOR(managers?.or)} — all statistically close to the workers
+              reference. Whatever the regime was targeting, it was not the standard Soviet
+              occupational ladder.
+            </>
+          }
+        />
+
+        <FindingBlock
+          accent
+          stat={formatOR(army?.or)}
+          statLabel="military vs. workers/peasants"
+          headline="The largest single effect in the data"
+          body={
+            <>
+              Nothing else in the model comes close to the military category, which carries more
+              than three times the odds of execution. The historical reading is straightforward —
+              the 1937–38 purge of the Red Army officer corps removed roughly thirty thousand
+              officers, of whom about a third were shot. Kazakh military personnel appear in this
+              data as part of that broader pattern.
+            </>
+          }
+        />
+      </div>
+
+      <div className="mt-8 rounded-3xl border border-zinc-200 bg-zinc-50/80 p-6">
+        <div className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-700">
+          What this model cannot say
+        </div>
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-zinc-600">
+          These estimates are associations, not causal effects. The model does not identify{" "}
+          <em>what</em> about higher education made it predict execution — whether political
+          visibility, suspected foreign influence, prior opposition activity, or something else
+          that travels with education. One other category worth flagging is{" "}
+          <span className="font-semibold text-zinc-950">unemployment</span> ({formatOR(unemployed?.or)}),
+          which sits alongside religion and the military as a high-risk marker — consistent with
+          a regime that treated people without institutional anchor as politically suspect. The
+          military category here also aggregates Red Army personnel, NKVD officers, and other
+          uniformed services; disaggregating it would be a natural next step.
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -661,21 +836,6 @@ export default function DataDrivenHistoryStory() {
           </div>
         </section>
 
-        <section className="border-y border-zinc-200 bg-white">
-          <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
-            <SectionTitle eyebrow="Data pipeline" title="The page reads its figures from the exported dataset results">
-              The Python analysis creates a single JSON file with descriptive rates, model odds ratios, sample sizes, and timeline counts. This page reads that file directly.
-            </SectionTitle>
-
-            <div className="grid gap-4 md:grid-cols-4">
-              <MetricCard value={formatNumber(meta.totalKazakhstanRecords)} label="Kazakhstan subset" detail="All nationalities before filtering to Kazakh individuals." />
-              <MetricCard value={formatNumber(meta.educationRawDistinct)} label="Raw education values" detail="Collapsed into standardized education categories." />
-              <MetricCard value={formatNumber(meta.executionFlagColumns)} label="Sentence fields checked" detail="Used to create the binary execution outcome." />
-              <MetricCard value={formatNumber(meta.model3N)} label="Model 3 sample" detail="Categorical education + categorical occupation + period controls." />
-            </div>
-          </div>
-        </section>
-
         <section className="border-b border-zinc-200 bg-white">
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
             <SectionTitle eyebrow="Finding 1" title="The education pattern is not linear, but risk rises at the top">
@@ -706,18 +866,22 @@ export default function DataDrivenHistoryStory() {
         </section>
 
         <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
-          <SectionTitle eyebrow="Finding 4" title="The categorical model strengthens the story but adds caution">
-            Model 3 shows large positive associations for some categories, including higher education and several special occupation categories, while period remains central to interpretation.
+          <SectionTitle eyebrow="Historical context" title="The timing of repression matters as much as social profile">
+            Before turning to the model, the timeline below shows why arrest period must be treated as a control variable. The Great Terror years dominate the execution count, and the model that follows holds period constant to isolate the role of education and occupation.
           </SectionTitle>
-          <OddsPlot data={storyData.oddsRatios} meta={meta} />
+          <TimelineChart data={storyData.timeline} />
         </section>
 
         <section className="border-y border-zinc-200 bg-white">
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
-            <SectionTitle eyebrow="Historical context" title="The timing of repression matters as much as social profile">
-              The timeline shows why arrest period is not just a control variable. The Great Terror years dominate the execution count.
+            <SectionTitle
+              eyebrow="Finding 4"
+              title="What the model reveals after controlling for period"
+            >
+              The raw rates above show higher and religious education with elevated execution rates. But that pattern has an obvious problem — perhaps higher-educated arrestees were simply concentrated in the Great Terror years, when execution rates were extreme for everyone. To know whether education matters on its own, we have to hold the period constant. The logistic regression below does exactly that.
             </SectionTitle>
-            <TimelineChart data={storyData.timeline} />
+            <OddsPlot data={storyData.oddsRatios} meta={meta} />
+            <ModelFindings data={storyData.oddsRatios} />
           </div>
         </section>
 
@@ -725,9 +889,9 @@ export default function DataDrivenHistoryStory() {
           <div className="mx-auto grid max-w-7xl gap-8 px-5 py-16 md:grid-cols-[1.2fr_0.8fr] md:px-8">
             <div>
               <div className="text-sm font-semibold uppercase tracking-[0.28em] text-zinc-400">Conclusion</div>
-              <h2 className="mt-3 text-4xl font-semibold tracking-tight">Repression was not socially neutral.</h2>
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight">Repression was not socially neutral — but not in the way the simple story suggests.</h2>
               <p className="mt-5 text-lg leading-8 text-zinc-300">
-                Among documented repressed Kazakhs, death sentences were more common among people with higher education and among selected high-status or institutionally visible occupations. The evidence suggests a selective loss of human capital and leadership, while still requiring caution because the database reflects documented records rather than a complete census of all victims.
+                Among documented repressed Kazakhs, death sentences did not rise smoothly with education. Risk concentrated in specific categories — higher and religious education, military and religious occupations — rather than along the full status hierarchy. The formal civilian ladder from workers up to managers showed almost no gradient. The pattern is consistent with a regime that targeted political visibility, institutional authority, and specific cultural categories rather than punishing literacy or rank as such. These findings still require caution: the database reflects documented records rather than a complete census of all victims.
               </p>
             </div>
 
@@ -739,7 +903,7 @@ export default function DataDrivenHistoryStory() {
                 <li>• Education and occupation classifications rely on keyword matching and may contain errors.</li>
                 <li>• Religious education and religious occupation are analytically different from secular education and civilian occupation categories.</li>
               </ul>
-              <div className="mt-6 text-xs uppercase tracking-[0.2em] text-zinc-500">Source: {meta.source} · Generated from story-data.json</div>
+              <div className="mt-6 text-xs uppercase tracking-[0.2em] text-zinc-500">Source: {meta.source} </div>
             </div>
           </div>
         </section>
