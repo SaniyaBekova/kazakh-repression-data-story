@@ -1,0 +1,570 @@
+{
+  "meta": {
+    "source": "openlist.wiki",
+    "totalKazakhstanRecords": 171372,
+    "totalKazakhRecords": 36520,
+    "knownEducationN": 31345,
+    "knownOccupationN": 22431,
+    "educationRawDistinct": 790,
+    "executionFlagColumns": 8,
+    "overallKazakhEducationRate": 22.9,
+    "overallOccupationRate": 25.6,
+    "overallAllNationalitiesRate": 24.5,
+    "model1N": 31197,
+    "model2N": 18299,
+    "model3N": 19776,
+    "model3ReferenceEducation": "Illiterate",
+    "model3ReferenceOccupation": "Workers/Peasants",
+    "modelReferencePeriod": "Great Terror"
+  },
+  "educationRates": [
+    {
+      "level": "Illiterate",
+      "short": "Illiterate",
+      "rate": 19.8,
+      "n": 8476,
+      "group": "general"
+    },
+    {
+      "level": "Low literacy",
+      "short": "Low literacy",
+      "rate": 17.3,
+      "n": 243,
+      "group": "general"
+    },
+    {
+      "level": "Basic literacy",
+      "short": "Basic\nliteracy",
+      "rate": 12.1,
+      "n": 232,
+      "group": "general"
+    },
+    {
+      "level": "Primary",
+      "short": "Primary",
+      "rate": 23.2,
+      "n": 18503,
+      "group": "general"
+    },
+    {
+      "level": "Secondary",
+      "short": "Secondary",
+      "rate": 26.4,
+      "n": 2560,
+      "group": "general"
+    },
+    {
+      "level": "Vocational",
+      "short": "Vocational",
+      "rate": 27.9,
+      "n": 409,
+      "group": "general"
+    },
+    {
+      "level": "Incomplete higher",
+      "short": "Incomplete\nhigher",
+      "rate": 19.9,
+      "n": 206,
+      "group": "general"
+    },
+    {
+      "level": "Higher",
+      "short": "Higher",
+      "rate": 38.2,
+      "n": 568,
+      "group": "general"
+    },
+    {
+      "level": "Religious education",
+      "short": "Religious\neducation",
+      "rate": 58.8,
+      "n": 148,
+      "group": "religious"
+    }
+  ],
+  "occupationRates": [
+    {
+      "category": "Workers/Peasants",
+      "short": "Workers/Peasants",
+      "rate": 22.5,
+      "n": 13926,
+      "modelIncluded": true
+    },
+    {
+      "category": "Specialists",
+      "short": "Specialists",
+      "rate": 29.2,
+      "n": 2761,
+      "modelIncluded": true
+    },
+    {
+      "category": "Senior Specialists",
+      "short": "Senior\nSpecialists",
+      "rate": 26.1,
+      "n": 606,
+      "modelIncluded": true
+    },
+    {
+      "category": "Managers",
+      "short": "Managers",
+      "rate": 33.0,
+      "n": 3541,
+      "modelIncluded": true
+    },
+    {
+      "category": "Army",
+      "short": "Army",
+      "rate": 21.1,
+      "n": 773,
+      "modelIncluded": true
+    },
+    {
+      "category": "Religious",
+      "short": "Religious",
+      "rate": 45.3,
+      "n": 322,
+      "modelIncluded": true
+    },
+    {
+      "category": "Student",
+      "short": "Student",
+      "rate": 18.7,
+      "n": 139,
+      "modelIncluded": true
+    },
+    {
+      "category": "Unemployed",
+      "short": "Unemployed",
+      "rate": 48.3,
+      "n": 290,
+      "modelIncluded": true
+    },
+    {
+      "category": "Prisoner",
+      "short": "Prisoner",
+      "rate": 9.6,
+      "n": 73,
+      "modelIncluded": true
+    }
+  ],
+  "comparisonRates": [
+    {
+      "level": "Illiterate",
+      "kazakhs": 19.8,
+      "all": 22.6,
+      "kazakhN": 8476,
+      "allN": 16041
+    },
+    {
+      "level": "Low literacy",
+      "kazakhs": 17.3,
+      "all": 13.0,
+      "kazakhN": 243,
+      "allN": 938
+    },
+    {
+      "level": "Basic literacy",
+      "kazakhs": 12.1,
+      "all": 11.5,
+      "kazakhN": 232,
+      "allN": 679
+    },
+    {
+      "level": "Primary",
+      "kazakhs": 23.2,
+      "all": 24.7,
+      "kazakhN": 18503,
+      "allN": 59628
+    },
+    {
+      "level": "Secondary",
+      "kazakhs": 26.4,
+      "all": 25.3,
+      "kazakhN": 2560,
+      "allN": 12248
+    },
+    {
+      "level": "Vocational",
+      "kazakhs": 27.9,
+      "all": 28.3,
+      "kazakhN": 409,
+      "allN": 1592
+    },
+    {
+      "level": "Incomplete higher",
+      "kazakhs": 19.9,
+      "all": 24.7,
+      "kazakhN": 206,
+      "allN": 1150
+    },
+    {
+      "level": "Higher",
+      "kazakhs": 38.2,
+      "all": 28.9,
+      "kazakhN": 568,
+      "allN": 4343
+    },
+    {
+      "level": "Religious education",
+      "kazakhs": 58.8,
+      "all": 51.4,
+      "kazakhN": 148,
+      "allN": 321
+    }
+  ],
+  "oddsRatios": [
+    {
+      "variable": "Basic literacy",
+      "rawVariable": "edu_basic_literacy",
+      "or": 0.431,
+      "low": 0.268,
+      "high": 0.694,
+      "p": 0.00054,
+      "type": "Education"
+    },
+    {
+      "variable": "Higher",
+      "rawVariable": "edu_higher",
+      "or": 1.897,
+      "low": 1.516,
+      "high": 2.372,
+      "p": 0.0,
+      "type": "Education"
+    },
+    {
+      "variable": "Incomplete higher",
+      "rawVariable": "edu_incomplete_higher",
+      "or": 1.027,
+      "low": 0.659,
+      "high": 1.601,
+      "p": 0.90733,
+      "type": "Education"
+    },
+    {
+      "variable": "Low literacy",
+      "rawVariable": "edu_low_literacy",
+      "or": 0.665,
+      "low": 0.441,
+      "high": 1.004,
+      "p": 0.05235,
+      "type": "Education"
+    },
+    {
+      "variable": "Primary",
+      "rawVariable": "edu_primary",
+      "or": 0.955,
+      "low": 0.874,
+      "high": 1.044,
+      "p": 0.30985,
+      "type": "Education"
+    },
+    {
+      "variable": "Religious education",
+      "rawVariable": "edu_religious",
+      "or": 2.081,
+      "low": 1.35,
+      "high": 3.208,
+      "p": 0.00091,
+      "type": "Education"
+    },
+    {
+      "variable": "Secondary",
+      "rawVariable": "edu_secondary",
+      "or": 1.023,
+      "low": 0.889,
+      "high": 1.176,
+      "p": 0.75532,
+      "type": "Education"
+    },
+    {
+      "variable": "Vocational",
+      "rawVariable": "edu_vocational",
+      "or": 1.183,
+      "low": 0.901,
+      "high": 1.554,
+      "p": 0.22659,
+      "type": "Education"
+    },
+    {
+      "variable": "Occupation: Army",
+      "rawVariable": "occ_army",
+      "or": 3.346,
+      "low": 2.622,
+      "high": 4.269,
+      "p": 0.0,
+      "type": "Occupation"
+    },
+    {
+      "variable": "Occupation: Specialists",
+      "rawVariable": "occ_level2_specialists",
+      "or": 0.91,
+      "low": 0.813,
+      "high": 1.02,
+      "p": 0.10439,
+      "type": "Occupation"
+    },
+    {
+      "variable": "Occupation: Chiefs",
+      "rawVariable": "occ_level3_chiefs",
+      "or": 0.934,
+      "low": 0.755,
+      "high": 1.155,
+      "p": 0.52947,
+      "type": "Occupation"
+    },
+    {
+      "variable": "Occupation: Managers",
+      "rawVariable": "occ_level4_managers",
+      "or": 1.102,
+      "low": 1.001,
+      "high": 1.215,
+      "p": 0.04877,
+      "type": "Occupation"
+    },
+    {
+      "variable": "Occupation: Prisoner",
+      "rawVariable": "occ_prisoner",
+      "or": 0.644,
+      "low": 0.278,
+      "high": 1.494,
+      "p": 0.30572,
+      "type": "Occupation"
+    },
+    {
+      "variable": "Occupation: Religious",
+      "rawVariable": "occ_religious",
+      "or": 2.07,
+      "low": 1.589,
+      "high": 2.696,
+      "p": 0.0,
+      "type": "Occupation"
+    },
+    {
+      "variable": "Occupation: Student",
+      "rawVariable": "occ_student",
+      "or": 0.515,
+      "low": 0.317,
+      "high": 0.836,
+      "p": 0.00725,
+      "type": "Occupation"
+    },
+    {
+      "variable": "Occupation: Unemployed",
+      "rawVariable": "occ_unemployed",
+      "or": 2.294,
+      "low": 1.752,
+      "high": 3.004,
+      "p": 0.0,
+      "type": "Occupation"
+    },
+    {
+      "variable": "Period: Collectivization",
+      "rawVariable": "period_collectivization",
+      "or": 0.235,
+      "low": 0.214,
+      "high": 0.257,
+      "p": 0.0,
+      "type": "Period"
+    },
+    {
+      "variable": "Period: Early",
+      "rawVariable": "period_early",
+      "or": 0.41,
+      "low": 0.329,
+      "high": 0.513,
+      "p": 0.0,
+      "type": "Period"
+    },
+    {
+      "variable": "Period: Late",
+      "rawVariable": "period_late",
+      "or": 0.086,
+      "low": 0.073,
+      "high": 0.102,
+      "p": 0.0,
+      "type": "Period"
+    }
+  ],
+  "timeline": [
+    {
+      "year": 1918,
+      "sentenced": 1,
+      "executed": 0
+    },
+    {
+      "year": 1919,
+      "sentenced": 16,
+      "executed": 5
+    },
+    {
+      "year": 1920,
+      "sentenced": 21,
+      "executed": 7
+    },
+    {
+      "year": 1921,
+      "sentenced": 52,
+      "executed": 36
+    },
+    {
+      "year": 1922,
+      "sentenced": 1,
+      "executed": 0
+    },
+    {
+      "year": 1923,
+      "sentenced": 3,
+      "executed": 1
+    },
+    {
+      "year": 1924,
+      "sentenced": 3,
+      "executed": 0
+    },
+    {
+      "year": 1925,
+      "sentenced": 2,
+      "executed": 0
+    },
+    {
+      "year": 1926,
+      "sentenced": 33,
+      "executed": 0
+    },
+    {
+      "year": 1927,
+      "sentenced": 30,
+      "executed": 2
+    },
+    {
+      "year": 1928,
+      "sentenced": 157,
+      "executed": 6
+    },
+    {
+      "year": 1929,
+      "sentenced": 667,
+      "executed": 191
+    },
+    {
+      "year": 1930,
+      "sentenced": 4324,
+      "executed": 786
+    },
+    {
+      "year": 1931,
+      "sentenced": 5560,
+      "executed": 602
+    },
+    {
+      "year": 1932,
+      "sentenced": 1551,
+      "executed": 113
+    },
+    {
+      "year": 1933,
+      "sentenced": 1455,
+      "executed": 44
+    },
+    {
+      "year": 1934,
+      "sentenced": 186,
+      "executed": 2
+    },
+    {
+      "year": 1935,
+      "sentenced": 314,
+      "executed": 5
+    },
+    {
+      "year": 1936,
+      "sentenced": 312,
+      "executed": 42
+    },
+    {
+      "year": 1937,
+      "sentenced": 9164,
+      "executed": 4028
+    },
+    {
+      "year": 1938,
+      "sentenced": 3956,
+      "executed": 1593
+    },
+    {
+      "year": 1939,
+      "sentenced": 178,
+      "executed": 3
+    },
+    {
+      "year": 1940,
+      "sentenced": 412,
+      "executed": 23
+    },
+    {
+      "year": 1941,
+      "sentenced": 732,
+      "executed": 92
+    },
+    {
+      "year": 1942,
+      "sentenced": 1332,
+      "executed": 208
+    },
+    {
+      "year": 1943,
+      "sentenced": 877,
+      "executed": 41
+    },
+    {
+      "year": 1944,
+      "sentenced": 252,
+      "executed": 3
+    },
+    {
+      "year": 1945,
+      "sentenced": 313,
+      "executed": 7
+    },
+    {
+      "year": 1946,
+      "sentenced": 250,
+      "executed": 4
+    },
+    {
+      "year": 1947,
+      "sentenced": 203,
+      "executed": 1
+    },
+    {
+      "year": 1948,
+      "sentenced": 287,
+      "executed": 5
+    },
+    {
+      "year": 1949,
+      "sentenced": 409,
+      "executed": 3
+    },
+    {
+      "year": 1950,
+      "sentenced": 210,
+      "executed": 5
+    },
+    {
+      "year": 1951,
+      "sentenced": 184,
+      "executed": 0
+    },
+    {
+      "year": 1952,
+      "sentenced": 22,
+      "executed": 0
+    },
+    {
+      "year": 1953,
+      "sentenced": 24,
+      "executed": 1
+    }
+  ]
+}
